@@ -114,13 +114,15 @@ contract StakeDao is ReentrancyGuard, Ownable {
 
     function voteUp() public {
         require(proposal == true, "Proposal Not Initiated!");
+        require(balance[msg.sender] > 0);
         votesInFavor += 1;
         emit Vote_Cast(msg.sender, "In Favor");
     }
 
     function voteDown() public {
         require(proposal == true, "Proposal Not Initiated!");
-        votesInDenial += 1;
+        require(balance[msg.sender] > 0);
+        votesInDenial -= 1;
         emit Vote_Cast(msg.sender, "In Denial");
     }
 
